@@ -1,5 +1,5 @@
 import { compose, Constructor } from "./composer";
-import { IPlayStation, IPowerCord, IPowered, ITelevision } from "./interfaces";
+import { IHDTelevision, IPlayStation, IPowerCord, IPowered, ITelevision, IRadio, IRadioWithVolumeDial } from "./interfaces";
 import { Outlet } from "./room";
 
 function withPowerCord<P extends Constructor>( RequiresPowerCord:P ): P & Constructor<IPowerCord> {
@@ -18,12 +18,54 @@ function withPowerCord<P extends Constructor>( RequiresPowerCord:P ): P & Constr
     }
 }
 
+function withHighDef<P extends Constructor>( RequiresHD:P ): P & Constructor<IHDTelevision>{
 
-class Television extends withPowerCord(class {}) implements ITelevision {
+    return class extends RequiresHD{
+        resolution:string;
+        
+    }
+
+}
+
+function withVolumeDial<Parent extends Constructor>( RequiresVolumeDial:Parent ): Parent & Constructor<IRadioWithVolumeDial>{
+
+    return class extends RequiresVolumeDial{
+        volumeDial:number[] = [1, 2, 3, 4, 5];
+    }
+}
+
+class Radio extends withPowerCord(class {}) implements IRadio{
+
+    hasSpeakers:boolean;
 
     constructor(){
         super();
+  
+    }   
+}
 
+class RadioWithVolumeDial extends withVolumeDial(Radio){
+    constructor(){
+        super();
+        
+    }
+}
+
+class Television extends withPowerCord(class {}) implements ITelevision {
+
+    model:string;
+
+    constructor(){
+        super();
+    
+        this.hasPower;
+    }
+
+}
+
+class HDTelevision extends withHighDef(Television){
+    constructor(){
+        super();
         this.hasPower;
     }
 

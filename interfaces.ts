@@ -7,7 +7,17 @@ export interface IPlayStation extends IPowerCord {
 }
 
 export interface ITelevision extends IPowerCord {
+
+    model:string;
+
 }
+
+export interface IHDTelevision{
+
+    resolution:string;
+    
+}
+
 
 export interface IPowerCord extends IPowered {
     
@@ -18,4 +28,16 @@ export interface IPowerCord extends IPowered {
 
 export interface IPowered {
     hasPower:boolean;
+}
+
+export interface IRadio extends IPowerCord {
+
+    hasSpeakers:boolean;
+
+}
+
+export interface IRadioWithVolumeDial{
+
+    volumeDial:number[];
+
 }
